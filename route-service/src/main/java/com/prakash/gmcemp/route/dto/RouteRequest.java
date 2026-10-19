@@ -1,0 +1,1 @@
+package com.prakash.gmcemp.route.dto;import jakarta.validation.constraints.*;public record RouteRequest(@NotBlank String originPort,@NotBlank String destinationPort,@NotNull @Positive Double distanceKm,String originCountry,String destinationCountry){}

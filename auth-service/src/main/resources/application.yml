@@ -1,0 +1,36 @@
+server:
+  port: 8085
+spring:
+  application:
+    name: auth-service
+  datasource:
+    url: jdbc:h2:mem:authservice
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    open-in-view: false
+  h2:
+    console:
+      enabled: true
+jwt:
+  secret: ${JWT_SECRET:gmcemp-local-development-secret-key-2026-change-me}
+  expiration-minutes: ${JWT_EXPIRATION_MINUTES:60}
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+
+eureka:
+  instance:
+    prefer-ip-address: true
+    hostname: localhost
+
+  client:
+    service-url:
+      defaultZone: ${EUREKA_URL:http://localhost:8761/eureka}
+
+

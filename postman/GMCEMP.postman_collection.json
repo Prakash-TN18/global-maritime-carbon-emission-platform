@@ -1,0 +1,72 @@
+{
+  "info": {
+    "name": "GMCEMP",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Create Shipment",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "http://localhost:8081/api/shipments",
+        "body": {
+          "mode": "raw",
+          "raw": "{\"bookingNo\": \"BKG001\", \"vesselName\": \"PIL SINGAPORE\", \"originPort\": \"SGSIN\", \"destinationPort\": \"INMAA\", \"containerType\": \"40HC\", \"cargoWeightTons\": 10, \"status\": \"CREATED\"}"
+        }
+      }
+    },
+    {
+      "name": "Create Route",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "http://localhost:8082/api/routes",
+        "body": {
+          "mode": "raw",
+          "raw": "{\"originPort\": \"SGSIN\", \"destinationPort\": \"INMAA\", \"distanceKm\": 5000, \"originCountry\": \"Singapore\", \"destinationCountry\": \"India\"}"
+        }
+      }
+    },
+    {
+      "name": "Calculate Emission",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "http://localhost:8083/api/emissions/calculate",
+        "body": {
+          "mode": "raw",
+          "raw": "{\"shipmentId\": 1, \"routeId\": 1, \"emissionFactor\": 0.015}"
+        }
+      }
+    },
+    {
+      "name": "Summary",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "http://localhost:8084/api/reports/summary"
+      }
+    }
+  ]
+}

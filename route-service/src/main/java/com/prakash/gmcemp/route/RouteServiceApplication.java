@@ -1,0 +1,1 @@
+package com.prakash.gmcemp.route;import org.springframework.boot.*;import org.springframework.boot.autoconfigure.*;@SpringBootApplication public class RouteServiceApplication{public static void main(String[]a){SpringApplication.run(RouteServiceApplication.class,a);}}

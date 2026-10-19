@@ -1,0 +1,36 @@
+# Maven
+target/
+**/target/
+
+# Java
+*.class
+***ar
+*.jar.original
+
+# Environment***secrets
+.env
+*.env
+!.***.example
+
+# Eclipse
+.settings/
+.***ject
+.classpath
+
+#*** Code
+.vscode/
+
+# IntelliJ
+.idea***.iml
+
+# Logs
+*.log
+logs/
+
+# Back*****temporary
+*.bak
+*.tmp
+*.swp
+
+# O***DS_Store
+Thumbs.db

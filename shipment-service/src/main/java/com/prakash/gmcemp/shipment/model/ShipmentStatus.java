@@ -1,0 +1,1 @@
+package com.prakash.gmcemp.shipment.model; public enum ShipmentStatus {CREATED,IN_TRANSIT,DELIVERED,CANCELLED}

@@ -1,0 +1,1 @@
+package com.prakash.gmcemp.emission.repository;import com.prakash.gmcemp.emission.model.EmissionCalculation;import org.springframework.data.jpa.repository.JpaRepository;import java.util.*;public interface EmissionRepository extends JpaRepository<EmissionCalculation,Long>{List<EmissionCalculation> findByShipmentId(Long id);}

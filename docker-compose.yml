@@ -1,0 +1,141 @@
+services:
+
+  gmcemp-oracle:
+    image: gvenzl/oracle-free:latest
+    container_name: gmcemp-oracle
+    environment:
+      ORACLE_PASSWORD: ${ORACLE_PASSWORD}
+      APP_USER: ${DB_USERNAME}
+      APP_USER_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - "1521:1521"
+    volumes:
+      - oracle-data:/opt/oracle/oradata
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "healthcheck.sh"
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 20
+      start_period: 30s
+
+  discovery-service:
+    build:
+      context: ./discovery-service
+    container_name: discovery-service
+    ports:
+      - "8761:8761"
+
+  auth-service:
+    build:
+      context: ./auth-service
+    container_name: auth-service
+    environment:
+      DB_URL: jdbc:oracle:thin:@gmcemp-oracle:1521/FREEPDB1
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
+      EUREKA_URL: http://discovery-service:8761/eureka
+      JWT_SECRET: ${JWT_SECRET}
+    ports:
+      - "8085:8085"
+    depends_on:
+      gmcemp-oracle:
+        condition: service_healthy
+      discovery-service:
+        condition: service_started
+
+  shipment-service:
+    build:
+      context: ./shipment-service
+    container_name: shipment-service
+    environment:
+      DB_URL: jdbc:oracle:thin:@gmcemp-oracle:1521/FREEPDB1
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
+      EUREKA_URL: http://discovery-service:8761/eureka
+    ports:
+      - "8081:8081"
+    depends_on:
+      gmcemp-oracle:
+        condition: service_healthy
+      discovery-service:
+        condition: service_started
+
+  route-service:
+    build:
+      context: ./route-service
+    container_name: route-service
+    environment:
+      DB_URL: jdbc:oracle:thin:@gmcemp-oracle:1521/FREEPDB1
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
+      EUREKA_URL: http://discovery-service:8761/eureka
+    ports:
+      - "8082:8082"
+    depends_on:
+      gmcemp-oracle:
+        condition: service_healthy
+      discovery-service:
+        condition: service_started
+
+  emission-service:
+    build:
+      context: ./emission-service
+    container_name: emission-service
+    environment:
+      DB_URL: jdbc:oracle:thin:@gmcemp-oracle:1521/FREEPDB1
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
+      EUREKA_URL: http://discovery-service:8761/eureka
+    ports:
+      - "8083:8083"
+    depends_on:
+      gmcemp-oracle:
+        condition: service_healthy
+      discovery-service:
+        condition: service_started
+      shipment-service:
+        condition: service_started
+      route-service:
+        condition: service_started
+
+  reporting-service:
+    build:
+      context: ./reporting-service
+    container_name: reporting-service
+    environment:
+      DB_URL: jdbc:oracle:thin:@gmcemp-oracle:1521/FREEPDB1
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
+      EUREKA_URL: http://discovery-service:8761/eureka
+    ports:
+      - "8084:8084"
+    depends_on:
+      gmcemp-oracle:
+        condition: service_healthy
+      discovery-service:
+        condition: service_started
+      emission-service:
+        condition: service_started
+
+  gateway-service:
+    build:
+      context: ./gateway-service
+
+    container_name: gateway-service
+
+    environment:
+      EUREKA_URL: "http://discovery-service:8761/eureka"
+
+    ports:
+      - "8080:8080"
+
+    depends_on:
+      discovery-service:
+        condition: service_started
+
+volumes:
+  oracle-data:

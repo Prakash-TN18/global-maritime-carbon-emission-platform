@@ -1,0 +1,1 @@
+package com.prakash.gmcemp.reporting.dto;import java.time.LocalDateTime;public record EmissionView(Long id,Long shipmentId,Long routeId,Double distanceKm,Double weightTons,Double emissionFactor,Double totalCo2Kg,LocalDateTime calculatedAt){}

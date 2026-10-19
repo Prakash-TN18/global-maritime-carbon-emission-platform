@@ -1,0 +1,1 @@
+package com.prakash.gmcemp.emission.dto;public record RouteView(Long id,String originPort,String destinationPort,Double distanceKm){}

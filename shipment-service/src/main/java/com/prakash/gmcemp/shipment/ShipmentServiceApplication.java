@@ -1,0 +1,1 @@
+package com.prakash.gmcemp.shipment; import org.springframework.boot.*;import org.springframework.boot.autoconfigure.*;@SpringBootApplication public class ShipmentServiceApplication{public static void main(String[]a){SpringApplication.run(ShipmentServiceApplication.class,a);}}

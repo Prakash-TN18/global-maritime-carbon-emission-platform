@@ -1,0 +1,1 @@
+package com.prakash.gmcemp.emission.dto;public record ShipmentView(Long id,String bookingNo,String originPort,String destinationPort,Double cargoWeightTons){}

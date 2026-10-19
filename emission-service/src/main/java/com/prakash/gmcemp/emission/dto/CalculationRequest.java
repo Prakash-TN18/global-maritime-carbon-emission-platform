@@ -1,0 +1,1 @@
+package com.prakash.gmcemp.emission.dto;import jakarta.validation.constraints.*;public record CalculationRequest(@NotNull Long shipmentId,@NotNull Long routeId,@Positive Double emissionFactor){}
