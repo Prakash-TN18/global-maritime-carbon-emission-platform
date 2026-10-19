@@ -9,6 +9,11 @@ pipeline {
 
     environment {
         COMPOSE_PROJECT_NAME = 'gmcemp'
+
+        ORACLE_PASSWORD = credentials('gmcemp-oracle-password')
+        DB_USERNAME = credentials('gmcemp-db-username')
+        DB_PASSWORD = credentials('gmcemp-db-password')
+        JWT_SECRET = credentials('gmcemp-jwt-secret')
     }
 
     stages {
@@ -61,15 +66,20 @@ pipeline {
 
         failure {
             echo 'GMCEMP CI/CD pipeline failed. Check the stage logs.'
-            bat 'docker compose ps -a'
+
+            script {
+                bat(
+                    returnStatus: true,
+                    script: 'docker compose ps -a'
+                )
+            }
         }
 
         always {
             archiveArtifacts(
                 artifacts: '**/target/*.jar',
-                fingerprint: true,
-                allowEmptyArchive: true
-            )
-        }
+                f***erprint: true,
+                a***wEmptyArchive: true
+            ***       }
     }
 }
