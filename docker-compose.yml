@@ -131,7 +131,7 @@ services:
       EUREKA_URL: "http://discovery-service:8761/eureka"
 
     ports:
-      - "8080:8080"
+      - "8090:8080"
 
     depends_on:
       discovery-service:
