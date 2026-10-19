@@ -78,8 +78,9 @@ pipeline {
         always {
             archiveArtifacts(
                 artifacts: '**/target/*.jar',
-                f***erprint: true,
-                a***wEmptyArchive: true
-            ***       }
-    }
+                fingerprint: true,
+                allowEmptyArchive: true
+            )
+        }
+
 }
